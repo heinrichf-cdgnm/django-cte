@@ -1,5 +1,7 @@
 from django.db.models.sql.constants import INNER
 
+from ._quoting import quote_name
+
 
 class QJoin:
     """Join clause with join condition from Q object clause
@@ -50,7 +52,7 @@ class QJoin:
             alias = ''
         else:
             alias = ' %s' % self.table_alias
-        qn = compiler.quote_name_unless_alias
+        qn = quote_name(compiler)
         sql = '%s %s%s ON %s' % (
             self.join_type,
             qn(self.table_name),
